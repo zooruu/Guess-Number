@@ -42,8 +42,6 @@ const changeBody = function (backgroundColor) {
 }
 
 
-
-
 //Add Event listener on check Button, and have a event handler:
 //check guess value: !guess, guess === secretNumber, guess > secretNumber, guess < secretNumber
 //at the same time, manipulate css style using JavaScript in different situation
@@ -60,21 +58,14 @@ document.querySelector('.check').addEventListener('click', function () {
             highScore = score;
             showHighScore(highScore);
         }
-    } else if (guess > secretNumber) {
+    } else if (guess !== secretNumber) {
         if (score > 0) {
-            showMessage('📈 Larger than Secret Number!');
+            showMessage(guess > secretNumber ? '📈 Larger than Secret Number!' : '📉 Smaller than Secret Number!');
             score = score - 1;
-        } else {
-            showMessage('🤯 You lose');;
-        }
-    } else if (guess < secretNumber) {
-        if (score > 0) {
-            showMessage('📉 Smaller than Secret Number!');
-            score = score - 1;
-            document.querySelector('.score').textContent = score;
         } else {
             showMessage('🤯 You lose');
         }
+        showScore(score);
     }
 });
 
