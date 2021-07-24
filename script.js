@@ -10,6 +10,39 @@ let score = 20;
 let highScore = 0;
 
 
+//function for creating a secret number
+const createSecretNumber = function () {
+    secretNumber = Math.trunc(Math.random() * 20) + 1;
+    return secretNumber;
+}
+
+//function for showing message
+const showMessage = function (message) {
+    document.querySelector('.message').textContent = message;
+}
+
+//function for showing secretNumber
+const showSecretNumber = function (secretNumber) {
+    document.querySelector('.number').textContent = secretNumber;
+}
+
+//function for showing score
+const showScore = function (score) {
+    document.querySelector('.score').textContent = score;
+}
+
+//function for showing high score
+const showHighScore = function (highScore) {
+    document.querySelector('.highscore').textContent = highScore;
+}
+
+//function for changing body background color
+const changeBody = function (backgroundColor) {
+    document.querySelector('body').style.backgroundColor = backgroundColor;
+}
+
+
+
 
 //Add Event listener on check Button, and have a event handler:
 //check guess value: !guess, guess === secretNumber, guess > secretNumber, guess < secretNumber
@@ -18,39 +51,31 @@ document.querySelector('.check').addEventListener('click', function () {
     let guess = Number(document.querySelector('.guess').value);
 
     if (!guess) {
-        document.querySelector('.message').textContent = '⛔️ No number!';
+        showMessage('⛔️ No number!');
     } else if (guess === secretNumber) {
-        document.querySelector('.message').textContent = '😀 Correct number!';
-        document.querySelector('.number').textContent = secretNumber;
-        document.querySelector('body').style.backgroundColor = '#60b347';
-
-
+        showMessage('😀 Correct number!');
+        showSecretNumber(secretNumber);
+        changeBody('#60b347');
         if (score > highScore) {
             highScore = score;
-            document.querySelector('.highscore').textContent = highScore;
+            showHighScore(highScore);
         }
-
     } else if (guess > secretNumber) {
         if (score > 0) {
-            document.querySelector('.message').textContent = '📈 Larger than Secret Number!';
+            showMessage('📈 Larger than Secret Number!');
             score = score - 1;
-            document.querySelector('.score').textContent = score;
         } else {
-            document.querySelector('.message').textContent = '🤯 You lose';
+            showMessage('🤯 You lose');;
         }
-
-
     } else if (guess < secretNumber) {
         if (score > 0) {
-            document.querySelector('.message').textContent = '📉 Smaller than Secret Number!';
+            showMessage('📉 Smaller than Secret Number!');
             score = score - 1;
             document.querySelector('.score').textContent = score;
         } else {
-            document.querySelector('.message').textContent = '🤯 You lose';
+            showMessage('🤯 You lose');
         }
     }
-
-
 });
 
 
@@ -61,10 +86,10 @@ document.querySelector('.check').addEventListener('click', function () {
 //Manipulate text content and reset text on it 
 document.querySelector('.again').addEventListener('click', function () {
     score = 20;
-    secretNumber = Math.trunc(Math.random() * 20) + 1;
-    document.querySelector('.score').textContent = score;
+    createSecretNumber();
+    showScore(score);
     document.querySelector('.guess').value = '';
-    document.querySelector('.number').textContent = '?';
-    document.querySelector('.message').textContent = 'Start guessing...';
-    document.querySelector('body').style.backgroundColor = '#222';
+    showSecretNumber('?');
+    showMessage('Start guessing...');
+    changeBody('#222');
 });
